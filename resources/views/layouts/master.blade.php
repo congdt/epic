@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="js/index.js" type="text/javascript"></script>
+  <script src="{{ url('/') . '/storage/js/index.js' }}" type="text/javascript"></script>
   <title>@yield('title')</title>
   <style>
     /*CSS cho phần tiêu đề */
@@ -58,13 +58,18 @@
     /* CSS cho avatar */
     .tieude {
       font-weight: bold;
-      padding-left: 20px;
+      padding-left: 0px;
     }
+	
     .profile {
       height: 300px;
-      background-image: url("images/minh.png");
-      padding: 10px;
-      margin: 20px;
+	  width : 1040px;
+    @if (Auth::check())
+	  background: url({{url('/') . '/storage/' . Auth::user()->wallpaper }}) no-repeat; 
+	  background-size: 1040px 300px;
+	@endif
+      padding: 1px;
+      margin: 30px;
     }
     
     /* Set black background color, white text and some padding */
@@ -89,9 +94,11 @@
 <nav id="nav" class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li id="trangchu"><a href="index">Trang chủ</a></li>
+      <li id="trangchu"><a href="/index">Trang chủ</a></li>
       @yield('profile')
-      <li id="trangcanhan"><a href="profile"><img src="images/thaprua.jpg" class="img-circle" alt="Cinque Terre" width="25" height="25"/> Trang cá nhân</a></li>
+	  @if (Auth::check())
+      <li id="trangcanhan"><a href="/profile"><img src="{{ url('/') . '/storage/' . Auth::user()->avatar }}" class="img-circle" alt="Cinque Terre" width="25" height="25"/> {{ Auth::user()->name }}</a></li>
+	  @endif 
     </ul>
     <form class="navbar-form navbar-left">
       <div class="input-group">
@@ -105,10 +112,10 @@
     </form>
     <ul id="login" class="nav navbar-nav navbar-right">
 	@if(!Auth::check())
-      <li><a href="register"><span class="glyphicon glyphicon-user"></span> Đăng kí</a></li>
-      <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+      <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Đăng kí</a></li>
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
 	@else
-	  <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
+	  <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
 	@endif
     </ul>
   </div>
@@ -119,13 +126,13 @@
       <div class="container col-2" data-spy="affix">
         <ul class="nav nav-pills nav-stacked">
           <li id="danganh">
-            <a href="uploadForm"><i class="fa fa-camera" style="font-size:20px"></i> <span id="button_left"> Đăng ảnh </span></a>
+            <a href="/uploadForm"><i class="fa fa-camera" style="font-size:20px"></i> <span id="button_left"> Đăng ảnh </span></a>
           </li>
           <li id="khoanh">
-            <a href="home"><i class="fa fa-image" style="font-size:20px"></i> <span id="button_left"> Kho ảnh</span></a>
+            <a href="/editalbum"><i class="fa fa-image" style="font-size:20px"></i> <span id="button_left"> Kho ảnh</span></a>
           </li>
           <li id="theodoi">
-            <a href="follow"><i class="fa fa-user-secret" style="font-size:20px"></i> <span id="button_left"> Theo dõi</span></a>
+            <a href="#"><i class="fa fa-user-secret" style="font-size:20px"></i> <span id="button_left"> Theo dõi</span></a>
           </li>
         </ul>
         <div class="banquyen">

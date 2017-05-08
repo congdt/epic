@@ -4,7 +4,7 @@
 
 @section('content')
 <div id="div1" class="col-sm-10 sidenav">
-  <div class="text-left profile">
+  <div class="profile text-left" >
     <div style="margin-top: 180px;">
       <span class="tieude">
       <img src="{{ url('/') . '/storage/' . Auth::user()->avatar }}" class="img-circle" alt="Cinque Terre" width="100" height="100"> 
@@ -14,6 +14,7 @@
     </div>
   </div>
   <div id="div2" class="col-sm-12 sidenav" style="font-family: cursive; font-size: 20px; padding: 0px; margin: 0px">
+    <a href="editalbum" style="padding-left: 35px;"><button class="btn btn-primary">Chỉnh sửa hồ sơ</button></a>
     <br>
     <div id="div2" class="col-sm-6">
       @for( $i = 0; $i < round(count($pictures)/2); $i++)
@@ -22,7 +23,7 @@
               <img src="{{ url('/') . '/storage/' . Auth::user()->avatar }}"" class="img-circle" alt="Cinque Terre" width="40" height="40"/>
                {{ Auth::user()->name }}
               <br/>
-			  
+			  <br>
           </span>
 		  <p style="font-family: cursive"> {{ $pictures[$i]['description'] }} </p>
           <img src="{{ url('/') . '/storage/' . $pictures[$i]['filePath'] }}" alt="myphoto" style="width:100%"/>  
